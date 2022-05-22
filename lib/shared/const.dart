@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 
-InputDecoration textDecorated(
-  BuildContext context, {
-  String? hint,
-  String? labelText,
-  Widget? suffixIcon,
-  EdgeInsetsGeometry contentPadding =
-      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-}) {
+InputDecoration textDecorated(BuildContext context,
+    {String? hint,
+    String? labelText,
+    Widget? suffixIcon,
+    EdgeInsetsGeometry? contentPadding}) {
   return InputDecoration(
     labelText: labelText,
     hintText: hint,
-    contentPadding: contentPadding,
-    border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(15.0)),
-    ),
+    contentPadding: contentPadding ??
+        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
     enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: Colors.black54, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(5.0)),
     ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.blue.shade800, width: 1.0),
-      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+    focusedBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.blue, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(5.0)),
     ),
     isDense: true,
     suffixIconConstraints: const BoxConstraints(

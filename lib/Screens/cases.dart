@@ -4,7 +4,6 @@ import 'package:dentisia/Screens/profile.dart';
 import 'package:dentisia/Screens/search.dart';
 import 'package:dentisia/service/controller/case.dart';
 import 'package:dentisia/service/model/case_model.dart';
-import 'package:dentisia/shared/const.dart';
 import 'package:dentisia/shared/prov.dart';
 import 'package:dentisia/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +22,14 @@ class Posts extends StatelessWidget {
               'Dentisia',
               center: false,
               action: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, NewPost.route);
+                    },
+                    icon: const Icon(
+                      Icons.add_circle_outline_rounded,
+                      color: Colors.blue,
+                    )),
                 IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, Profile.route);
@@ -46,11 +53,6 @@ class Posts extends StatelessWidget {
                     icon: Icon(Icons.notifications_active_outlined,
                         color: Colors.green.shade900)),
               ],
-            ),
-            floatingActionButton: CreateAlertDialog(
-              onpress: () {
-                Navigator.pushNamed(context, NewPost.route);
-              },
             ),
             body: StreamBuilder<List<CaseModel>>(
                 stream: CaseService().getCaseStream(jwt: prov.token!),
@@ -80,8 +82,9 @@ class Posts extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: PostContainer(
                               jwt: prov.token!,
+                              medicalHistory: snapshot.data![i].medicalHistory,
                               likesList: snapshot.data![i].likes,
-                              text: snapshot.data![i].content,
+                              desc: snapshot.data![i].desc,
                               casePhotos: snapshot.data![i].photos,
                               uid: snapshot.data![i].uid,
                               commentsCount:

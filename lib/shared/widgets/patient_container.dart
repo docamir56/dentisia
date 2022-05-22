@@ -33,15 +33,13 @@ class PatientContainer extends StatelessWidget {
       required this.age,
       required this.phone,
       required this.place,
-      // this.state,
-
       required this.onpress,
       required this.username})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -109,22 +107,25 @@ class PatientContainer extends StatelessWidget {
                 ),
               )),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if (puplic)
-                OutlinedButton(
-                  child: const Text(
-                    'Refer?',
-                    style: TextStyle(color: Colors.blue),
+              // if (puplic)
+              //   OutlinedButton(
+              //     child: const Text(
+              //       'Refer?',
+              //       style: TextStyle(color: Colors.blue),
+              //     ),
+              //     onPressed: () {},
+              //   ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: OutlinedButton(
+                  child: Text(
+                    state,
+                    style: const TextStyle(color: Colors.green),
                   ),
-                  onPressed: () {},
+                  onPressed: onpress,
                 ),
-              OutlinedButton(
-                child: Text(
-                  state,
-                  style: const TextStyle(color: Colors.green),
-                ),
-                onPressed: onpress,
               ),
             ],
           )

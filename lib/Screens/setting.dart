@@ -45,18 +45,6 @@ class Setting extends StatelessWidget {
               TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.quick_contacts_mail_outlined,
-                    size: 28,
-                  ),
-                  label: const Text(
-                    "My cases",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                  )),
-              const SizedBox(height: 15),
-              TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
                     Icons.comment_bank_outlined,
                     size: 28,
                   ),

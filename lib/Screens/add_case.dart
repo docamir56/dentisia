@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 import 'dart:io';
 import 'package:dentisia/service/controller/case.dart';
 import 'package:dentisia/shared/prov.dart';
@@ -25,248 +24,174 @@ class _NewPostState extends State<NewPost> {
   bool uploading = false;
   double val = 0;
   final TextEditingController _postController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _medController = TextEditingController();
+
+  bool value = true;
   @override
   Widget build(BuildContext context) {
-    // final _auth = Provider.of<AuthBase>(context, listen: false);
+    final prov = Provider.of<Prov>(context, listen: false);
     return SafeArea(
         child: Form(
             key: _formKey,
-            child: Consumer<Prov>(
-              builder: (context, prov, child) {
-                return Scaffold(
-                    appBar: appBar(
-                      'create new case',
-                      //  action: [
-                      //   TextButton(
-                      //       onPressed: uploading
-                      //           ? null
-                      //           : () async {
-                      //               if (_formKey.currentState!.validate()) {
-                      //                 try {
-                      //                   if (_imageList.isNotEmpty) {
-                      //                     setState(() {
-                      //                       uploading = true;
-                      //                     });
-                      //                     await uploadFile();
-                      //                   }
-                      //                   await imgRef!.doc().set({
-                      //                     'details': _postController.text,
-                      //                     'time': DateTime.now().toString(),
-                      //                     'photoUrl': _auth.currentUser!.photoURL,
-                      //                     'sender':
-                      //                         _auth.currentUser!.displayName,
-                      //                     'comments': 0,
-                      //                     'likes': [],
-                      //                     'casesPhotos':
-                      //                         _urlList.isNotEmpty ? _urlList : [],
-                      //                     'uid': _auth.currentUser!.uid,
-                      //                     'email': _auth.currentUser!.email,
-                      //                     'tag': prov.createStateText
-                      //                   });
-                      //                 } on FirebaseException catch (e) {
-                      //                   if (Platform.isAndroid) {
-                      //                     switch (e.message) {
-                      //                       default:
-                      //                         print(
-                      //                             'Case ${e.message} is not yet implemented');
-                      //                     }
-                      //                   } else if (Platform.isIOS) {}
-                      //                 } finally {
-                      //                   setState(() {
-                      //                     _postController.clear();
-                      //                     Navigator.pop(context);
-                      //                     uploading = false;
-                      //                   });
-                      //                 }
-                      //               }
-                      //             },
-                      //       child: const Text('Submit'))
-                      // ]
-                    ),
-                    body: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              controller: _postController,
-                              //  decoration: BoxDecoration(
-                              //   color: Colors.white,
-                              //   borderRadius: BorderRadius.circular(25),
-                              //   border: Border.all(
-                              //       color: Colors.black.withAlpha(40),
-                              //       width: 2)),
-                              decoration: textDecorated(
-                                context,
-                                hint: 'Please Ask or Share your case ... ',
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 20.0),
-                              ),
-                              minLines: 4,
-                              maxLines: 8,
-                              validator: (value) => value!.isEmpty ||
-                                      value.characters.length > 800 ||
-                                      prov.createStateText == null
-                                  ? "Enter your case less than 800 characters and your field"
-                                  : null,
-                            ),
-                          ),
-                          // const Padding(
-                          //   padding: EdgeInsets.all(8.0),
-                          //   child: Divider(
-                          //     height: 1,
-                          //     thickness: 1,
-                          //   ),
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Text(
-                                'tag :',
-                                style: TextStyle(
-                                    color: Colors.indigo,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Colors.black.withAlpha(40),
-                                        width: 2)),
-                                child: DropText(
-                                  state: prov.createStateText,
-                                  hint: 'Please select field',
-                                  map: prov.createStateList.map((stateText) {
-                                    return DropdownMenuItem(
-                                        value: stateText,
-                                        child: Text(stateText));
-                                  }).toList(),
-                                  onchange: (val) => prov.createClick(val),
-                                  onSaved: (val) => prov.createClick(val),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // const Padding(
-                          //   padding: EdgeInsets.all(8.0),
-                          //   child: Divider(
-                          //     height: 1,
-                          //     thickness: 1,
-                          //   ),
-                          // ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 160,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                      color: Colors.black.withAlpha(40),
-                                      width: 2)),
-                              child: GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 5),
-                                  itemCount: _imageList.length + 1,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return index == 0
-                                        ? Column(
-                                            children: [
-                                              Center(
-                                                child: IconButton(
-                                                  icon: const Icon(
-                                                    Icons.add,
-                                                    color: Colors.blue,
-                                                  ),
-                                                  onPressed: () {
-                                                    selectImage();
-                                                  },
+            child: Scaffold(
+                appBar: appBar(
+                  'add new case',
+                ),
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        TextF(
+                          _nameController,
+                          "Enter your case name which is private !!",
+                          labelText: 'Case name',
+                          hint: 'Please insert your case name ... ',
+                          short: true,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextF(_medController,
+                            "Enter your case medical history  !!",
+                            labelText: 'Medical history',
+                            hint:
+                                'Please insert your case medical history ... ',
+                            short: true),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextF(
+                          _postController,
+                          "Enter your case less than 800 characters and your field",
+                          labelText: 'Case description',
+                          hint: 'Please document your case ... ',
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Container(
+                            height: 160,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    color: Colors.black54.withAlpha(80),
+                                    width: 2)),
+                            child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 5),
+                                itemCount: _imageList.length + 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return index == 0
+                                      ? Column(
+                                          children: [
+                                            Center(
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.add,
+                                                  color: Colors.blue,
                                                 ),
+                                                onPressed: () {
+                                                  selectImage();
+                                                },
                                               ),
-                                              const Text('Add photo')
-                                            ],
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: Stack(
-                                              fit: StackFit.expand,
-                                              children: [
-                                                Image.file(
-                                                  File(_imageList[index - 1]
-                                                      .path),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                Container(
-                                                  color: const Color.fromRGBO(
-                                                      255, 255, 244, 0.7),
-                                                  child: IconButton(
-                                                    onPressed: () {
-                                                      _imageList
-                                                          .removeAt(index - 1);
-                                                      setState(() {});
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.delete),
-                                                    color: Colors.red,
-                                                  ),
-                                                )
-                                              ],
-                                            ));
-                                  }),
-                            ),
-                          ),
-                          OutlinedButton(
-                            onPressed: uploading
-                                ? null
-                                : () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      try {
-                                        await CaseService().addCase(
-                                          content: _postController.text,
-                                          tag: prov.createStateText,
-                                          uid: prov.uid!,
+                                            ),
+                                            const Text('Add photo')
+                                          ],
+                                        )
+                                      : Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            Image.file(
+                                              File(_imageList[index - 1].path),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            Container(
+                                              color: const Color.fromRGBO(
+                                                  255, 255, 244, 0.7),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  _imageList
+                                                      .removeAt(index - 1);
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(Icons.delete),
+                                                color: Colors.red,
+                                              ),
+                                            )
+                                          ],
                                         );
-                                      } catch (e) {
-                                        print(e.toString());
-                                      } finally {
-                                        Navigator.of(context).pop();
-                                      }
-                                    }
-                                  },
-                            child: const Text(
-                              'Submit',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                                }),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Text(
+                              'tag :',
+                              style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          )
-                        ],
-                      ),
-                      // uploading
-                      //     ? Center(
-                      //         child: Column(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             const Text('Uploading...'),
-                      //             CircularProgressIndicator(
-                      //               value: val,
-                      //               valueColor:
-                      //                   const AlwaysStoppedAnimation<Color>(
-                      //                       Colors.green),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       )
-                      //     : Container()
-                    ));
-              },
-            )));
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: DropText(
+                                state: prov.createStateText,
+                                hint: 'Please select field',
+                                map: prov.createStateList.map((stateText) {
+                                  return DropdownMenuItem(
+                                      value: stateText, child: Text(stateText));
+                                }).toList(),
+                                onchange: (val) => prov.createClick(val),
+                                onSaved: (val) => prov.createClick(val),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                                value: value,
+                                onChanged: (value2) {
+                                  setState(() {
+                                    value = value2!;
+                                  });
+                                }),
+                            const Text('Share my case to puplic cases.')
+                          ],
+                        ),
+                        OutlinedButton(
+                          onPressed: uploading
+                              ? null
+                              : () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    try {
+                                      await CaseService().addCase(
+                                        caseName: _nameController.text,
+                                        medicalHistory: _medController.text,
+                                        public: value,
+                                        desc: _postController.text,
+                                        tag: prov.createStateText,
+                                        uid: prov.uid!,
+                                      );
+                                      Navigator.of(context).pop();
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  }
+                                },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ))));
   }
 
   void selectImage() async {

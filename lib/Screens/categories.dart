@@ -82,6 +82,7 @@ class BuildIcon extends StatelessWidget {
           Text(
             name,
             style: TextStyle(
+              color: Colors.green.shade900,
               fontSize: MediaQuery.of(context).textScaleFactor * 20,
               fontFamily: 'Caveat-VariableFont_wght',
               fontWeight: FontWeight.w900,

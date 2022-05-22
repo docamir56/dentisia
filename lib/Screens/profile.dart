@@ -1,3 +1,4 @@
+import 'package:dentisia/Screens/my_cases.dart';
 import 'package:dentisia/Screens/setting.dart';
 import 'package:dentisia/Screens/sign_in.dart';
 import 'package:dentisia/service/controller/uers.dart';
@@ -121,12 +122,17 @@ class _ProfileState extends State<Profile> {
                           TextWidget(
                               item: 'Phone : ', data: data.phone.toString()),
                           TextWidget(item: 'Birthday : ', data: data.age),
-                          TextWidget(
-                              item: 'Points : ', data: data.points.toString()),
+                          // TextWidget(
+                          //     item: 'Points : ', data: data.points.toString()),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               // OutlinedButton(onPressed: () {}, child: Text('Setting')),
+                              materialButton(
+                                () => Navigator.of(context)
+                                    .pushNamed(MyCases.route),
+                                "My Cases",
+                              ),
                               materialButton(
                                 () => Navigator.of(context)
                                     .pushNamed(Setting.route),

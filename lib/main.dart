@@ -6,6 +6,7 @@ import 'package:dentisia/Screens/create_patient.dart';
 import 'package:dentisia/Screens/forget.dart';
 import 'package:dentisia/Screens/home.dart';
 import 'package:dentisia/Screens/market.dart';
+import 'package:dentisia/Screens/my_cases.dart';
 import 'package:dentisia/Screens/my_patient.dart';
 import 'package:dentisia/Screens/news.dart';
 import 'package:dentisia/Screens/notification.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
           CreatePatient.route: (context) => CreatePatient(),
           NotificationPage.route: (context) => const NotificationPage(),
           MyPatient.route: (context) => const MyPatient(),
+          MyCases.route: (context) => const MyCases(),
           // Landing.route: (context) => const Landing(),
         },
       ),

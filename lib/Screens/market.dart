@@ -18,14 +18,15 @@ class MarketPage extends StatelessWidget {
       child: Scaffold(
           appBar: appBar('Shopping', center: false, action: [
             IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CreateItem.route);
+                },
+                icon: const Icon(Icons.add_circle_outline_rounded,
+                    color: Colors.blue)),
+            IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.favorite, color: Colors.red))
           ]),
-          floatingActionButton: CreateAlertDialog(
-            onpress: () {
-              Navigator.of(context).pushNamed(CreateItem.route);
-            },
-          ),
           body: _Stream()),
     );
   }

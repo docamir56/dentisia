@@ -9,9 +9,10 @@ import 'package:provider/provider.dart';
 class PostContainer extends StatelessWidget {
   final List<dynamic> casePhotos;
   final String? photoUrl;
-  final String text,
+  final String desc,
       time,
       userName,
+      medicalHistory,
       uid,
       caseId,
       commentsCount,
@@ -22,7 +23,8 @@ class PostContainer extends StatelessWidget {
   final String jwt;
   const PostContainer(
       {Key? key,
-      required this.text,
+      required this.desc,
+      required this.medicalHistory,
       required this.likesList,
       required this.time,
       required this.userName,
@@ -50,10 +52,6 @@ class PostContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    // onTap: () {
-                    //   Navigator.of(context).push(MaterialPageRoute(
-                    //       builder: (context) => UserProfile(uid: uid)));
-                    // },
                     leading: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       backgroundImage: photoUrl == null
@@ -91,9 +89,15 @@ class PostContainer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        text,
+                      TextWidget(
+                        data: medicalHistory,
+                        item: 'Med. history : ',
                       ),
+                      TextWidget(
+                        data: desc,
+                        item: 'desc : ',
+                      ),
+
                       // casePhotos.isNotEmpty
                       //     ? SizedBox(
                       //         height: 100,
@@ -134,7 +138,7 @@ class PostContainer extends StatelessWidget {
                       //     : Container(),
                       const SizedBox(height: 5),
                       TextWidget(
-                        item: 'tag #',
+                        item: 'tag # ',
                         data: tag,
                       ),
                     ],

@@ -6,7 +6,7 @@ import 'package:dentisia/shared/prov.dart';
 import 'package:dentisia/shared/widgets/app_bar.dart';
 import 'package:dentisia/shared/widgets/patient_container.dart';
 import 'package:flutter/material.dart';
-import 'package:dentisia/shared/const.dart';
+
 import 'package:provider/provider.dart';
 
 class PatientPage extends StatelessWidget {
@@ -21,13 +21,16 @@ class PatientPage extends StatelessWidget {
           appBar: appBar('Shared patient', center: false, action: [
             IconButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(CreatePatient.route);
+                },
+                icon: const Icon(Icons.add_circle_outline_rounded,
+                    color: Colors.blue)),
+            IconButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(MyPatient.route);
                 },
                 icon: const Icon(Icons.add_task_sharp, color: Colors.green))
           ]),
-          floatingActionButton: CreateAlertDialog(
-              onpress: () =>
-                  Navigator.of(context).pushNamed(CreatePatient.route)),
           body: _StreamPatientOne(
             jwt: _prov.token!,
             uid: _prov.uid!,

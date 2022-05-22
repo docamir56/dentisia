@@ -36,7 +36,7 @@ class PatientService {
           'location': location,
           'user': uid,
           'phone': phone,
-          'createdAt': DateTime.now(),
+          'createdAt': DateTime.now().toString(),
         },
         token: jwt);
     return data;

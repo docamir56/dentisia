@@ -1,9 +1,7 @@
 import 'package:dentisia/Screens/categories.dart';
-import 'package:dentisia/Screens/market.dart';
 import 'package:dentisia/Screens/news.dart';
 import 'package:dentisia/Screens/patient.dart';
 import 'package:dentisia/Screens/cases.dart';
-import 'package:dentisia/Screens/profile.dart';
 import 'package:dentisia/shared/prov.dart';
 import 'package:dentisia/shared/widgets/border_box.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +15,14 @@ class Home extends StatelessWidget {
     const Posts(),
     const PatientPage(),
     const Categories(),
-    const MarketPage(),
+    // const MarketPage(),
     const NewsPage(),
-    const Profile()
   ];
 
   @override
   Widget build(BuildContext context) {
     final _prov = Provider.of<Prov>(context);
-    // print(payload);
-    // print(_prov.uid);
-    // print(_prov.getJsonFromJWT(token);
+
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: SizedBox(
@@ -38,13 +33,10 @@ class Home extends StatelessWidget {
             currentIndex: _prov.selectedPage,
             elevation: 0,
             onTap: _prov.onTap,
-            type: BottomNavigationBarType.fixed,
             fixedColor: Colors.black,
             items: [
               BottomNavigationBarItem(
                   icon: BorderBox(
-                    // height: 50,
-                    // width: 50,
                     child: Icon(Icons.home,
                         color: _prov.selectedPage == 0
                             ? Colors.blue.shade900
@@ -69,19 +61,19 @@ class Home extends StatelessWidget {
                 ),
                 label: 'Quiz',
               ),
-              BottomNavigationBarItem(
-                icon: BorderBox(
-                  child: Icon(Icons.shopping_bag,
-                      color: _prov.selectedPage == 3
-                          ? Colors.red.shade900
-                          : Colors.grey),
-                ),
-                label: 'Market',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: BorderBox(
+              //     child: Icon(Icons.shopping_bag,
+              //         color: _prov.selectedPage == 3
+              //             ? Colors.red.shade900
+              //             : Colors.grey),
+              //   ),
+              //   label: 'Market',
+              // ),
               BottomNavigationBarItem(
                 icon: BorderBox(
                   child: Icon(Icons.new_releases,
-                      color: _prov.selectedPage == 4
+                      color: _prov.selectedPage == 3
                           ? Colors.purple.shade900
                           : Colors.grey),
                 ),

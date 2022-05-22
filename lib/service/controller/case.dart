@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dentisia/service/api.dart';
 import 'package:dentisia/service/model/case_model.dart';
+import 'package:dentisia/service/model/my_case_model.dart';
 
 class CaseService {
   Stream<List<CaseModel>> getCaseStream({required String jwt}) async* {
@@ -14,28 +15,35 @@ class CaseService {
     }).asyncMap((event) async => await event);
   }
 
-  Future<List<CaseModel>> getAllCases({required String jwt}) async {
+  Future<List<MyCaseModel>> getMyCases(String uid) async {
     final data = await API().get(
-        url: 'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/',
-        jwt: jwt);
-    List<CaseModel> caseList = [];
+        url:
+            'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/$uid',
+        jwt: null);
+    List<MyCaseModel> caseList = [];
     for (int i = 0; i < data.length; i++) {
-      caseList.add(CaseModel.fromJson(data: data[i]));
+      caseList.add(MyCaseModel.fromMyJson(data: data[i]));
     }
     return caseList;
   }
 
   Future<dynamic> addCase(
-      {required String content,
+      {required String desc,
       required String tag,
+      required String medicalHistory,
+      required String caseName,
+      required bool public,
       required String uid}) async {
     Map<String, dynamic> data = await API().post(
         url: 'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/',
         body: {
-          'content': content,
+          'desc': desc,
+          'medicalHistory': medicalHistory,
+          'caseName': caseName,
+          'public': public,
           'tag': tag,
           'user': uid,
-          'createdAt': DateTime.now(),
+          'createdAt': DateTime.now().toString(),
         },
         token: null);
     return data;
