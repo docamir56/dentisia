@@ -27,17 +27,18 @@ class CaseModel {
     required this.photos,
   });
 
-  factory CaseModel.fromJson({required Map<String, dynamic> data}) {
+  factory CaseModel.fromJson(
+      {required Map<String, dynamic> data, required bool isPublic}) {
     return CaseModel(
         caseId: data['_id'],
         desc: data['desc'],
         medicalHistory: data['medicalHistory'],
         likes: data['likes'],
         photos: data['photos'],
-        userName: data['user'][0]['name'],
-        userPhoto: data['user'][0]['photo'],
+        userName: isPublic ? data['user'][0]['name'] : "",
+        userPhoto: isPublic ? data['user'][0]['photo'] : '',
         tag: data['tag'],
-        uid: data['user'][0]['_id'],
+        uid: isPublic ? data['user'][0]['_id'] : '',
         time: data['createdAt'],
         commentCount: data['comments'].length,
         caseName: data['caseName']);

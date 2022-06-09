@@ -29,6 +29,7 @@ class Home extends StatelessWidget {
           height: 50,
           child: BottomNavigationBar(
             unselectedFontSize: 0,
+            type: BottomNavigationBarType.fixed,
             selectedFontSize: 0,
             currentIndex: _prov.selectedPage,
             elevation: 0,
@@ -56,7 +57,7 @@ class Home extends StatelessWidget {
                 icon: BorderBox(
                   child: Icon(Icons.quiz_rounded,
                       color: _prov.selectedPage == 2
-                          ? Colors.orange.shade900
+                          ? Colors.brown.shade900
                           : Colors.grey),
                 ),
                 label: 'Quiz',

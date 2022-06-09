@@ -8,7 +8,6 @@ import 'package:dentisia/shared/prov.dart';
 import 'package:dentisia/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../shared/widgets/post_container.dart';
 
 class Posts extends StatelessWidget {
@@ -81,7 +80,7 @@ class Posts extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: PostContainer(
-                              jwt: prov.token!,
+                              isPublic: true,
                               medicalHistory: snapshot.data![i].medicalHistory,
                               likesList: snapshot.data![i].likes,
                               desc: snapshot.data![i].desc,

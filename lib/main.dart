@@ -1,4 +1,5 @@
 import 'package:dentisia/Screens/about.dart';
+import 'package:dentisia/Screens/case_details.dart';
 import 'package:dentisia/Screens/categories.dart';
 import 'package:dentisia/Screens/conform.dart';
 import 'package:dentisia/Screens/create_market.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           NotificationPage.route: (context) => const NotificationPage(),
           MyPatient.route: (context) => const MyPatient(),
           MyCases.route: (context) => const MyCases(),
+          CaseDetails.route: (context) => const CaseDetails(),
           // Landing.route: (context) => const Landing(),
         },
       ),

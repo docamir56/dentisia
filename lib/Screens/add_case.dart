@@ -179,7 +179,7 @@ class _NewPostState extends State<NewPost> {
                                       );
                                       Navigator.of(context).pop();
                                     } catch (e) {
-                                      print(e);
+                                      throw Exception(e.toString());
                                     }
                                   }
                                 },

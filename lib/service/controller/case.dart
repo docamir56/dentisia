@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:dentisia/service/api.dart';
 import 'package:dentisia/service/model/case_model.dart';
-import 'package:dentisia/service/model/my_case_model.dart';
 
 class CaseService {
   Stream<List<CaseModel>> getCaseStream({required String jwt}) async* {
@@ -10,19 +9,20 @@ class CaseService {
           url: 'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/',
           jwt: jwt);
       return data
-          .map<CaseModel>((json) => CaseModel.fromJson(data: json))
+          .map<CaseModel>(
+              (json) => CaseModel.fromJson(data: json, isPublic: true))
           .toList();
     }).asyncMap((event) async => await event);
   }
 
-  Future<List<MyCaseModel>> getMyCases(String uid) async {
+  Future<List<CaseModel>> getMyCases(String uid) async {
     final data = await API().get(
         url:
             'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/$uid',
         jwt: null);
-    List<MyCaseModel> caseList = [];
+    List<CaseModel> caseList = [];
     for (int i = 0; i < data.length; i++) {
-      caseList.add(MyCaseModel.fromMyJson(data: data[i]));
+      caseList.add(CaseModel.fromJson(data: data[i], isPublic: false));
     }
     return caseList;
   }

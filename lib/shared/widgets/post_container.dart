@@ -18,9 +18,8 @@ class PostContainer extends StatelessWidget {
       commentsCount,
       tag,
       likesCount;
-
   final List<dynamic> likesList;
-  final String jwt;
+  final bool isPublic;
   const PostContainer(
       {Key? key,
       required this.desc,
@@ -31,10 +30,10 @@ class PostContainer extends StatelessWidget {
       this.photoUrl,
       required this.caseId,
       required this.tag,
-      required this.jwt,
       required this.uid,
       required this.commentsCount,
       required this.casePhotos,
+      required this.isPublic,
       required this.likesCount})
       : super(key: key);
 
@@ -51,39 +50,41 @@ class PostContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: photoUrl == null
-                          ? const AssetImage('images/user.png')
-                              as ImageProvider<Object>?
-                          : NetworkImage(
-                              photoUrl!,
-                            ),
-                    ),
-                    title: Text(
-                      userName,
-                      style: TextStyle(
-                          color: Colors.blue.shade900,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      time,
-                    ),
-                    trailing: uid == prov.uid
-                        ? IconButton(
-                            icon: const Icon(
-                              Icons.more_horiz,
-                            ),
-                            onPressed: () async {
-                              await showBottomMenu(
-                                  context: context,
-                                  url:
-                                      'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/$caseId',
-                                  jwt: prov.token!);
-                            })
-                        : null),
+                isPublic
+                    ? ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: photoUrl == null
+                              ? const AssetImage('images/user.png')
+                                  as ImageProvider<Object>?
+                              : NetworkImage(
+                                  photoUrl!,
+                                ),
+                        ),
+                        title: Text(
+                          userName,
+                          style: TextStyle(
+                              color: Colors.blue.shade900,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          time,
+                        ),
+                        trailing: uid == prov.uid
+                            ? IconButton(
+                                icon: const Icon(
+                                  Icons.more_horiz,
+                                ),
+                                onPressed: () async {
+                                  await showBottomMenu(
+                                      context: context,
+                                      url:
+                                          'https://limitless-everglades-08570.herokuapp.com/api/v1/cases/$caseId',
+                                      jwt: prov.token!);
+                                })
+                            : null)
+                    : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -146,43 +147,50 @@ class PostContainer extends StatelessWidget {
                 ),
               ],
             )),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton.icon(
-              onPressed: () async {
-                if (likesList.contains(prov.uid)) {
-                  likesList.remove(prov.uid);
-                  await CaseService().patchLike(
-                      token: jwt, caseId: caseId, body: {'likes': likesList});
-                } else {
-                  likesList.add(prov.uid);
-                  await CaseService().patchLike(
-                      token: jwt, caseId: caseId, body: {'likes': likesList});
-                }
-              },
-              icon: Icon(
-                !likesList.any((element) => element == prov.uid)
-                    ? Icons.thumb_up_alt_outlined
-                    : Icons.thumb_up,
-                color: Colors.pink,
-              ),
-              label: Text(likesCount),
-            ),
-            TextButton.icon(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Comments(
-                              caseId: caseId,
-                            )));
-              },
-              icon: Icon(Icons.maps_ugc_outlined, color: Colors.green.shade900),
-              label: Text(commentsCount),
-            )
-          ],
-        ),
+        isPublic
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton.icon(
+                    onPressed: () async {
+                      if (likesList.contains(prov.uid)) {
+                        likesList.remove(prov.uid);
+                        await CaseService().patchLike(
+                            token: prov.token!,
+                            caseId: caseId,
+                            body: {'likes': likesList});
+                      } else {
+                        likesList.add(prov.uid);
+                        await CaseService().patchLike(
+                            token: prov.token!,
+                            caseId: caseId,
+                            body: {'likes': likesList});
+                      }
+                    },
+                    icon: Icon(
+                      !likesList.any((element) => element == prov.uid)
+                          ? Icons.thumb_up_alt_outlined
+                          : Icons.thumb_up,
+                      color: Colors.pink,
+                    ),
+                    label: Text(likesCount),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Comments(
+                                    caseId: caseId,
+                                  )));
+                    },
+                    icon: Icon(Icons.maps_ugc_outlined,
+                        color: Colors.green.shade900),
+                    label: Text(commentsCount),
+                  )
+                ],
+              )
+            : const SizedBox()
       ],
     );
   }
